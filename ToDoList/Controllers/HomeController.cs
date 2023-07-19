@@ -13,6 +13,11 @@ namespace ToDoList.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        public HomeController()
+        {
+
+        }
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -121,5 +126,66 @@ namespace ToDoList.Controllers
             return Json(new { });
         }
 
+        public ToDoModel GetById(int id)
+        {
+            ToDoModel todo = new ToDoModel();
+
+            using (var connection =
+                   new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\ToDoDB.mdf;Integrated Security=True"))
+            {
+                using (var tableCmd = connection.CreateCommand())
+                {
+                    connection.Open();
+                    tableCmd.CommandText = $"SELECT * FROM todo Where Id = '{id}'";
+
+                    using (var reader = tableCmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            todo.Id = reader.GetInt32(0);
+                            todo.Name = reader.GetString(1);
+                        }
+                        else
+                        {
+                            return todo;
+                        }
+                    };
+                }
+            }
+
+            return todo;
+        }
+
+
+        [HttpGet]
+        public JsonResult PopulateForm(int id)
+        {
+            var todo = GetById(id);
+            return Json(todo);
+        }
+
+        public RedirectResult Update(ToDoModel todo)
+        {
+            using (SqlConnection con =
+                   new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\ToDoDB.mdf;Integrated Security=True"))
+            {
+                using (var tableCmd = con.CreateCommand())
+                {
+                    con.Open();
+                    tableCmd.CommandText = $"UPDATE todo SET name = '{todo.Name}' WHERE Id = '{todo.Id}'";
+                    try
+                    {
+                        tableCmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+
+            return Redirect("https://localhost:5001/");
+        }
     }
 }
