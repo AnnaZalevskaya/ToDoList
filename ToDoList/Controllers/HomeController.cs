@@ -136,7 +136,7 @@ namespace ToDoList.Controllers
                 using (var tableCmd = connection.CreateCommand())
                 {
                     connection.Open();
-                    tableCmd.CommandText = $"SELECT * FROM todo Where Id = '{id}'";
+                    tableCmd.CommandText = $"SELECT * FROM [ToDo] Where Id = '{id}'";
 
                     using (var reader = tableCmd.ExecuteReader())
                     {
@@ -173,7 +173,7 @@ namespace ToDoList.Controllers
                 using (var tableCmd = con.CreateCommand())
                 {
                     con.Open();
-                    tableCmd.CommandText = $"UPDATE todo SET name = '{todo.Name}' WHERE Id = '{todo.Id}'";
+                    tableCmd.CommandText = $"UPDATE [ToDo] SET Name = '{todo.Name}' WHERE Id = '{todo.Id}'";
                     try
                     {
                         tableCmd.ExecuteNonQuery();

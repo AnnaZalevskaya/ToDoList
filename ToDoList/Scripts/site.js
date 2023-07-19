@@ -6,7 +6,7 @@
             id: i
         },
         success: function () {
-            Window.location.reload();
+            window.location.reload();
         }
     });
 }
@@ -21,8 +21,8 @@ function populateForm(i) {
         },
         dataType: 'json',
         success: function (response) {
-            $("#Todo_Name").val(response.name);
-            $("#Todo_Id").val(response.id);
+            $("#Todo_Name").val(response.Name);
+            $("#Todo_Id").val(response.Id);
             $("#form-button").val("Update Todo");
             $("#form-action").attr("action", "/Home/Update");
         }
