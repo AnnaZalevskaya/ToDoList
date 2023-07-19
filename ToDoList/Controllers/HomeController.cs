@@ -96,5 +96,22 @@ namespace ToDoList.Controllers
             };
         }
 
+        [HttpPost]
+        public JsonResult Delete(int id)
+        {
+            using (SqlConnection con =
+                   new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\\ToDoDB.mdf;Integrated Security=True"))
+            {
+                using (var tableCmd = con.CreateCommand())
+                {
+                    con.Open();
+                    tableCmd.CommandText = $"DELETE from [ToDo] WHERE Id = '{id}'";
+                    tableCmd.ExecuteNonQuery();
+                }
+            }
+
+            return Json(new { });
+        }
+
     }
 }
