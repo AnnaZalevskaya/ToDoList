@@ -13,6 +13,7 @@ namespace ToDoList.Controllers
         public ActionResult Index()
         {
             var todoListViewModel = GetAllTodos();
+
             return View(todoListViewModel);
         }
 
