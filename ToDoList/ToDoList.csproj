@@ -185,7 +185,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Form.cshtml" />
   </ItemGroup>
+  
   <ItemGroup />
+  
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
